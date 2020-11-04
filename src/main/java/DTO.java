@@ -1,8 +1,16 @@
 public class DTO {
+    private String email;
     private String cpr;
     private String password;
     private int id;
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getCpr() {
         return cpr;
