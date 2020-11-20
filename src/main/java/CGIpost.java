@@ -24,7 +24,10 @@ public class CGIpost {
     private static void showBody(StringTokenizer t) {
         System.out.println("Transferred fields:");
         System.out.println("<TABLE BORDER=\"1\">");
+
+
         String felt;
+
         while ( t.hasMoreTokens() ) {
             felt = t.nextToken();
             if (felt != null) {
@@ -33,7 +36,8 @@ public class CGIpost {
                 String s = tt.nextToken();
                 if ( s != null ) {
                     System.out.print(s);
-                    s = tt.nextToken();
+                   // s = tt.nextToken();
+                    s = "poelse";
                     if ( s != null )
                         System.out.print("</TD><TD>"+s);
                 }
@@ -41,6 +45,7 @@ public class CGIpost {
             System.out.println("</TD></TR>");
         }
         System.out.println("</TABLE>");
+
     }
 
     public static void main(String[] args) {
@@ -48,6 +53,11 @@ public class CGIpost {
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
             String[] data = { in.readLine() };
+
+            for(String i : data){
+                System.out.println(i);
+            }
+
             showBody(new StringTokenizer(data[0],"&\n\r"));
         } catch(IOException ioe) {
             System.out.println("<P>IOException reading POST data: "+ioe+"</P>");

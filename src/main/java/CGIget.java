@@ -21,6 +21,7 @@ public class CGIget {
     }
 
     private static void showBody(StringTokenizer t) {
+
         System.out.println("Transferred fields:");
         System.out.println("<TABLE BORDER=\"1\">");
         String felt;
@@ -44,7 +45,11 @@ public class CGIget {
 
     public static void main(String[] args) {
         showHead();
+        for (String s: args){
+            System.out.println("<p>"+s+"</p> <br>");
+        }
         if (args.length > 0 && args[0] != null && args[0].length() > 0) {
+
             showBody(new StringTokenizer(args[0],"&\n\r"));
         } else
             System.out.println("<P>No data!</P>");
