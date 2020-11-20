@@ -27,24 +27,43 @@ public class CGIpost {
 
 
         String felt;
+        String s;
+        String mail=null;
+        String psw=null;
+        String cpr=null;
+        String cprIn=null;
+        String navn;
+        String vaerdi;
 
         while ( t.hasMoreTokens() ) {
             felt = t.nextToken();
             if (felt != null) {
                 System.out.print("<TR><TD>");
                 StringTokenizer tt = new StringTokenizer(felt,"=\n\r");
-                String s = tt.nextToken();
-                if ( s != null ) {
-                    System.out.print(s);
-                   // s = tt.nextToken();
-                    s = "poelse";
-                    if ( s != null )
-                        System.out.print("</TD><TD>"+s);
+                navn = tt.nextToken();
+                vaerdi=null;
+                if ( navn != null ) {
+                    System.out.print(navn);
+                    vaerdi = tt.nextToken();
+                    if ( vaerdi != null )
+                        System.out.print("</TD><TD>"+vaerdi);
                 }
+                if(navn.equals("email")){mail = vaerdi;}
+                if(navn.equals("psw")){psw = vaerdi;}
+                if(navn.equals("cpr")){cprIn = vaerdi;}
+
             }
             System.out.println("</TD></TR>");
         }
+
         System.out.println("</TABLE>");
+        cpr = SQLConnector.findUser(mail,psw);
+        if(cpr == null){
+            System.out.println("<p>Forkert login<p>");
+        }
+        if(!cpr.equals(cprIn)){
+            System.out.println("<p>CPR matcher ikke<p>");
+        }
 
     }
 
@@ -57,7 +76,6 @@ public class CGIpost {
             for(String i : data){
                 System.out.println(i);
             }
-
             showBody(new StringTokenizer(data[0],"&\n\r"));
         } catch(IOException ioe) {
             System.out.println("<P>IOException reading POST data: "+ioe+"</P>");
